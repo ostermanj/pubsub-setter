@@ -1,0 +1,26 @@
+{
+  "name": "pubsub-setter",
+  "version": "1.0.0",
+  "description": "An npm module for setting and managing subscriptions using pubsub-js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ostermanj/pubsub-setter.git"
+  },
+  "keywords": [
+    "pubsub"
+  ],
+  "author": "John Osterman <ostermanj@gmail.com> (http://osterman.io)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ostermanj/pubsub-setter/issues"
+  },
+  "homepage": "https://github.com/ostermanj/pubsub-setter#readme",
+  "dependencies": {
+    "pubsub-js": "^1.5.7",
+    "string-hash": "1.1.3"
+  }
+}
