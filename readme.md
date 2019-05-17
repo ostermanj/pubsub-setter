@@ -2,6 +2,10 @@
 
 Helper methods on top of npm package pubsub-js. Set, cancel, and keep track of PubSub subscriptions. Each subscription gets a unique token; alerts developers to duplicate subscriptions. Allows setting many subcriptions with one function call.
 
+## Change from last version
+
+`setSubs()` no longer creates hashed token for keeping track of subscriptions. Use pubsub.js's native methods instead. This fixes `token already in use` errors.
+
 ## Methods
 
 `logSubs()` : log the collection of subscriptions

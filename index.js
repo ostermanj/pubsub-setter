@@ -1,44 +1,27 @@
-var subscriptions = {};
+var PubSub = require("pubsub-js");
 
-function logSubs() {
+const subscriptions = [];
+
+function logSubs(){
     console.log(subscriptions);
-}
-
-function createToken(topic, fnRef){
-    var functionHash = hash(fnRef.toString());
-    var str = topic + fnRef;
-    var token = 'sub' + hash(str);
-    return {
-        token: token,
-        fn: functionHash
-    };
 }
 
 function setSubs(subsArray) { // subsArray is array of topic/function pair arrays
     subsArray.forEach(function(pair){
         var topic = pair[0],
-            fnRef = pair[1],
-            tokenObj = createToken(topic,fnRef);
-        
-        if ( subscriptions[tokenObj.fn] === undefined ) {
-            subscriptions[tokenObj.fn] = {};
-        }
-        if ( subscriptions[tokenObj.fn][topic] === undefined ) {
-            subscriptions[tokenObj.fn][topic] = PubSub.subscribe(topic,fnRef);  
-        } else {
-            throw 'Subscription token is already in use.';
-        }
+            fnRef = pair[1];
+        subscriptions.push(PubSub.subscribe(topic,fnRef));
     });
 }
 
 function cancelSub(topic,fnRef) { // for canceling single subscription
-    var tokenObj = createToken(topic,fnRef);
-    if ( subscriptions[tokenObj.fn] !== undefined && subscriptions[tokenObj.fn][topic] !== undefined ) {
-        PubSub.unsubscribe( subscriptions[tokenObj.fn][topic] );
-        delete subscriptions[tokenObj.fn][topic];
-        if ( Object.keys(subscriptions[tokenObj.fn]).length === 0 ) {
-            delete subscriptions[tokenObj.fn];
-        }
+    console.log('pubsub',subscriptions);
+    var token = PubSub.subscribe(topic,fnRef),
+        index = subscriptions.indexOf(token);
+    console.log('pubsub',token);
+    if ( index !== -1 ) {
+        PubSub.unsubscribe(token);
+        subscriptions.splice(index,1);
     } else {
         throw 'Subscription does not exist.';
     }
